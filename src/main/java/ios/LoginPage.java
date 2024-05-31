@@ -1,28 +1,27 @@
-package android.pages;
+package ios;
 
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.decorator.PageOpeningStrategy;
-import com.zebrunner.carina.webdriver.gui.AbstractPage;
+import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import common.LoginBasePage;
 import common.ProductsBasePage;
 import enums.User;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.FindBy;
 
-@DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = LoginBasePage.class)
+@DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = LoginBasePage.class)
 public class LoginPage extends LoginBasePage {
 
-    @FindBy(xpath = "//android.widget.ScrollView[@content-desc='test-Login']/android.view.ViewGroup/android.widget.ImageView[1]")
+    @ExtendedFindBy(iosPredicate = "name == 'assets/src/img/swag-labs-logo.png'")
     private ExtendedWebElement logo;
 
-    @FindBy(xpath = "//android.widget.TextView[@text='%s']")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == '%s'`]")
     private ExtendedWebElement usernameLocator;
 
-    @FindBy(xpath = "//android.widget.TextView[@text='LOGIN']/..")
+    @ExtendedFindBy(iosPredicate = "name == 'test-LOGIN'")
     private ExtendedWebElement loginButtonLocator;
 
-    @FindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Error message']/android.widget.TextView")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == 'test-Error message'`]")
     private ExtendedWebElement errorMessage;
 
     public LoginPage(WebDriver driver) {
