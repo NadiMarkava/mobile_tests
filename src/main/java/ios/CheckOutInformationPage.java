@@ -1,32 +1,33 @@
-package android.pages;
+package ios;
 
+import android.pages.CheckOutOverviewPage;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.decorator.PageOpeningStrategy;
-import com.zebrunner.carina.webdriver.gui.AbstractPage;
+import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import common.CheckOutInformationBasePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
-@DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = CheckOutInformationBasePage.class)
+@DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = CheckOutInformationBasePage.class)
 public class CheckOutInformationPage extends CheckOutInformationBasePage {
 
-    @FindBy(xpath = "//android.widget.TextView[@text='CHECKOUT: INFORMATION']")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == 'CHECKOUT: INFORMATION'`]")
     private ExtendedWebElement title;
 
-    @FindBy(xpath = "//android.widget.EditText[@content-desc='test-First Name']")
+    @ExtendedFindBy(iosPredicate = "name == 'test-First Name'")
     private ExtendedWebElement firstName;
 
-    @FindBy(xpath = "//android.widget.EditText[@content-desc='test-Last Name']")
+    @ExtendedFindBy(iosPredicate = "name == 'test-Last Name'")
     private ExtendedWebElement lastName;
 
-    @FindBy(xpath = "//android.widget.EditText[@content-desc='test-Zip/Postal Code']")
+    @ExtendedFindBy(iosPredicate = "name == 'test-Zip/Postal Code'")
     private ExtendedWebElement zipPostalCode;
 
-    @FindBy(xpath = "//android.view.ViewGroup[@content-desc='test-CANCEL']")
+    @ExtendedFindBy(iosPredicate = "name == 'test-CANCEL'")
     private ExtendedWebElement cancelButton;
 
-    @FindBy(xpath = "//android.view.ViewGroup[@content-desc='test-CONTINUE']")
+    @ExtendedFindBy(iosPredicate = "name == 'test-CONTINUE'")
     private ExtendedWebElement continueButton;
 
     public CheckOutInformationPage(WebDriver driver) {
