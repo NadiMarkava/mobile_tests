@@ -1,6 +1,6 @@
 package common;
 
-import android.pages.CheckOutOverviewPage;
+import android.CheckOutOverviewPage;
 import com.zebrunner.carina.webdriver.gui.AbstractPage;
 import org.openqa.selenium.WebDriver;
 

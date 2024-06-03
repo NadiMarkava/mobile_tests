@@ -1,10 +1,8 @@
-package ios;
+package android;
 
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.decorator.PageOpeningStrategy;
-import com.zebrunner.carina.webdriver.decorator.annotations.Predicate;
-import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import common.CartBasePage;
 import common.ProductDetailBasePage;
 import common.ProductsBasePage;
@@ -15,54 +13,46 @@ import org.openqa.selenium.support.FindBy;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = ProductsBasePage.class)
+@DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = ProductsBasePage.class)
 public class ProductsPage extends ProductsBasePage {
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == 'test-Cart'`]/XCUIElementTypeOther")
+    @FindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Cart']/android.view.ViewGroup/android.widget.ImageView")
     private ExtendedWebElement cartImage;
 
-    @FindBy(xpath = "//XCUIElementTypeOther[@name='test-Cart']/XCUIElementTypeOther")
-    @Predicate
+    @FindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Cart']/android.view.ViewGroup/android.widget.TextView")
     private ExtendedWebElement cartImageText;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == 'PRODUCTS'`]")
+    @FindBy(xpath = "//android.widget.TextView[@text='PRODUCTS']")
     private ExtendedWebElement title;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == 'test-Modal Selector Button'`]/XCUIElementTypeOther/XCUIElementTypeOther")
+    @FindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Modal Selector Button']")
     private ExtendedWebElement filterIcon;
 
-    @FindBy(xpath = "//XCUIElementTypeOther[@name='Sort items by...']/../XCUIElementTypeOther[@name='%s']")
-    @Predicate
+    @FindBy(xpath = "//android.widget.TextView[@text='Sort items by...']/../..//android.widget.TextView[@text='%s']/..")
     private ExtendedWebElement sortBy;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == 'test-Item title'`]")
-    private List<ExtendedWebElement> productNames;
-
-    @ExtendedFindBy(iosPredicate = "name == 'test-Item title' AND label == '%s'")
-    private ExtendedWebElement productName;
-
-    @Predicate
-    @FindBy(xpath = "name == 'test-Item title' AND label == '%s'/../type == 'XCUIElementTypeImage' AND name CONTAINS 'assets/src/img/'")
+    @FindBy(xpath = "//android.widget.TextView[@text='%s']/../android.widget.ImageView")
     private ExtendedWebElement productImage;
 
-    @FindBy(xpath = "//XCUIElementTypeStaticText[contains(@name, 'test-Price')]")
-    @Predicate
+    @FindBy(xpath = "//android.widget.TextView[contains(@content-desc, 'test-Item title')]")
+    private List<ExtendedWebElement> productNames;
+
+    @FindBy(xpath = "//android.widget.TextView[@content-desc='test-Price']")
     private List<ExtendedWebElement> productPrices;
 
-    @FindBy(xpath = "//XCUIElementTypeStaticText[contains(@label, '%s')]/../..//XCUIElementTypeStaticText[contains(@name, 'test-Price')]")
-    @Predicate
+    @FindBy(xpath = "//android.widget.TextView[@content-desc='test-Item title' and @text='%s']")
+    private ExtendedWebElement productName;
+
+    @FindBy(xpath = "//android.widget.TextView[@text='%s']/../android.widget.TextView[@content-desc='test-Price']")
     private ExtendedWebElement productPrice;
 
-    @FindBy(xpath = "//XCUIElementTypeStaticText[contains(@label, '%s')]/../..//XCUIElementTypeOther[@name='ADD TO CART']")
-    @Predicate
+    @FindBy(xpath = "//android.widget.TextView[@text='%s']/../android.view.ViewGroup[@content-desc='test-ADD TO CART']")
     private ExtendedWebElement addToCartButton;
 
-    @FindBy(xpath = "//XCUIElementTypeStaticText[contains(@label, '%s')]/../..//XCUIElementTypeOther[@name='REMOVE']")
-    @Predicate
+    @FindBy(xpath = "//android.widget.TextView[@text='%s']/..//android.view.ViewGroup[@content-desc='test-REMOVE']")
     private ExtendedWebElement removeButton;
 
-    @ExtendedFindBy(iosPredicate = "name == 'test-Toggle'")
-    @Predicate
+    @FindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Toggle']")
     private ExtendedWebElement toggle;
 
     public ProductsPage(WebDriver driver) {
@@ -79,7 +69,7 @@ public class ProductsPage extends ProductsBasePage {
 
     @Override
     public String getCartImageText() {
-        return cartImageText.getAttribute("name");
+        return cartImageText.getText();
     }
 
     @Override
@@ -95,7 +85,7 @@ public class ProductsPage extends ProductsBasePage {
 
     @Override
     public List<String> getNames() {
-        return productNames.stream().map(p -> p.getAttribute("value")).collect(Collectors.toList());
+        return productNames.stream().map(p -> p.getText()).collect(Collectors.toList());
     }
 
     @Override

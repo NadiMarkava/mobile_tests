@@ -1,32 +1,31 @@
-package ios;
+package android;
 
-import android.CheckOutOverviewPage;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.decorator.PageOpeningStrategy;
-import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import common.CheckOutInformationBasePage;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.FindBy;
 
-@DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = CheckOutInformationBasePage.class)
+@DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = CheckOutInformationBasePage.class)
 public class CheckOutInformationPage extends CheckOutInformationBasePage {
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == 'CHECKOUT: INFORMATION'`]")
+    @FindBy(xpath = "//android.widget.TextView[@text='CHECKOUT: INFORMATION']")
     private ExtendedWebElement title;
 
-    @ExtendedFindBy(iosPredicate = "name == 'test-First Name'")
+    @FindBy(xpath = "//android.widget.EditText[@content-desc='test-First Name']")
     private ExtendedWebElement firstName;
 
-    @ExtendedFindBy(iosPredicate = "name == 'test-Last Name'")
+    @FindBy(xpath = "//android.widget.EditText[@content-desc='test-Last Name']")
     private ExtendedWebElement lastName;
 
-    @ExtendedFindBy(iosPredicate = "name == 'test-Zip/Postal Code'")
+    @FindBy(xpath = "//android.widget.EditText[@content-desc='test-Zip/Postal Code']")
     private ExtendedWebElement zipPostalCode;
 
-    @ExtendedFindBy(iosPredicate = "name == 'test-CANCEL'")
+    @FindBy(xpath = "//android.view.ViewGroup[@content-desc='test-CANCEL']")
     private ExtendedWebElement cancelButton;
 
-    @ExtendedFindBy(iosPredicate = "name == 'test-CONTINUE'")
+    @FindBy(xpath = "//android.view.ViewGroup[@content-desc='test-CONTINUE']")
     private ExtendedWebElement continueButton;
 
     public CheckOutInformationPage(WebDriver driver) {
