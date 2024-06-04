@@ -1,9 +1,11 @@
 package android;
 
-import com.zebrunner.carina.core.IAbstractTest;
 import com.zebrunner.carina.core.registrar.ownership.MethodOwner;
-import com.zebrunner.carina.utils.mobile.IMobileUtils;
-import common.*;
+import com.zebrunner.carina.utils.factory.DeviceType;
+import common.components.CartProductItemBase;
+import common.components.TopBarMenuBase;
+import common.pages.*;
+import enums.NavMenu;
 import enums.SortItem;
 import enums.User;
 import org.testng.Assert;
@@ -12,32 +14,39 @@ import org.testng.annotations.Test;
 import java.util.Collections;
 import java.util.List;
 
-public class MobileSampleTest implements IAbstractTest, IMobileUtils {
+public class MobileSampleTest extends SwagLabsAbstractTest {
+    String productName = "Sauce Labs Backpack";
 
     @Test()
     @MethodOwner(owner = "nknysh")
     public void verifySuccessLogin() {
-        LoginBasePage loginPage = initPage(getDriver(), LoginBasePage.class);
-        ProductsBasePage productsPage = loginPage.loginAsUser(User.TEST_STANDART);
+        ProductsPageBase productsPage = logIn(User.STANDART);
         Assert.assertTrue(productsPage.isPageOpened(), "Products page isn't opened");
     }
 
     @Test()
     @MethodOwner(owner = "nknysh")
-    public void verifyLoginUWithLockedOutUser() {
-        LoginBasePage loginPage = initPage(getDriver(), LoginBasePage.class);
-        loginPage.loginAsUser(User.LOCKED);
-        Assert.assertEquals(loginPage.getErrorMessage(), "Sorry, this user has been locked out.");
+    public void verifyUserCanLogOut() {
+        ProductsPageBase productsPage = logIn(User.STANDART);
+        Assert.assertTrue(productsPage.isPageOpened(), "Products page isn't opened");
+        TopBarMenuBase menu = initPage(getDriver(), TopBarMenuBase.class);
+        LoginPageBase loginPage = (LoginPageBase) openNavMenuLink(NavMenu.LOG_OUT);
         Assert.assertTrue(loginPage.isPageOpened(), "Login page isn't opened");
     }
 
     @Test()
     @MethodOwner(owner = "nknysh")
+    public void verifyLoginUWithLockedOutUser() {
+        LoginPageBase loginPage = initPage(getDriver(), LoginPageBase.class);
+        loginPage.loginAsUser(User.LOCKED);
+        Assert.assertTrue(loginPage.isPageOpened(), "Login page isn't opened");
+        Assert.assertEquals(loginPage.getErrorMessage(), "Sorry, this user has been locked out.", "Error messages are not equal");
+    }
+
+    @Test()
+    @MethodOwner(owner = "nknysh")
     public void verifyProductCard() {
-        LoginBasePage loginPage = initPage(getDriver(), LoginBasePage.class);
-        ProductsBasePage productsPage = loginPage.loginAsUser(User.TEST_STANDART);
-        List<String> productNames = productsPage.getNames();
-        String productName = productNames.get(0);
+        ProductsPageBase productsPage = logIn(User.STANDART);
         Assert.assertTrue(productsPage.isImagePresent(productName), "Image is not present");
         Assert.assertTrue(productName.matches("[a-zA-Z]+\\s[a-zA-Z]+\\s[a-zA-Z]+"), "Name does not match");
         Assert.assertTrue(productsPage.getPriceText(productName).matches("\\$[0-9]{1,2}.[0-9]{1,2}"), "Price does not match");
@@ -47,11 +56,9 @@ public class MobileSampleTest implements IAbstractTest, IMobileUtils {
     @Test()
     @MethodOwner(owner = "nknysh")
     public void verifyProductDetailPage() {
-        LoginBasePage loginPage = initPage(getDriver(), LoginBasePage.class);
-        ProductsBasePage productsPage = loginPage.loginAsUser(User.STANDART);
-        String productName = productsPage.getNames().get(1);
+        ProductsPageBase productsPage = logIn(User.STANDART);
         String price = productsPage.getPriceText(productName);
-        ProductDetailBasePage productDetailPage = productsPage.clickProductName(productName);
+        ProductDetailPageBase productDetailPage = productsPage.clickProductName(productName);
         Assert.assertEquals(productDetailPage.getProductName(), productName, "Names are not equal");
         Assert.assertEquals(productDetailPage.getProductPrice(), price, "Prices are not equal");
     }
@@ -59,13 +66,12 @@ public class MobileSampleTest implements IAbstractTest, IMobileUtils {
     @Test()
     @MethodOwner(owner = "nknysh")
     public void verifySortBy() {
-        LoginBasePage loginPage = initPage(getDriver(), LoginBasePage.class);
-        ProductsBasePage productsPage = loginPage.loginAsUser(User.STANDART);
+        ProductsPageBase productsPage = logIn(User.STANDART);
         productsPage.clickToggleIcon();
         List<Double> beforePrices = productsPage.getPrices();
         productsPage.selectSortItem(SortItem.LOWHIGH);
         Assert.assertNotEquals(beforePrices, productsPage.getPrices(), "Prices are equal");
-        //duplicates
+        beforePrices.sort(Double::compareTo);
         Assert.assertEquals(beforePrices, productsPage.getPrices(), "Prices are not equal");
         productsPage.selectSortItem(SortItem.HIGHTOLOW);
         Collections.sort(beforePrices, Collections.reverseOrder());
@@ -75,9 +81,7 @@ public class MobileSampleTest implements IAbstractTest, IMobileUtils {
     @Test()
     @MethodOwner(owner = "nknysh")
     public void verifyAddToCartAndRemoveButtons() {
-        LoginBasePage loginPage = initPage(getDriver(), LoginBasePage.class);
-        ProductsBasePage productsPage = loginPage.loginAsUser(User.STANDART);
-        String productName = productsPage.getNames().get(1);
+        ProductsPageBase productsPage = logIn(User.STANDART);
         productsPage.clickAddToCartButton(productName);
         Assert.assertFalse(productsPage.isAddToCartButtonPresent(productName), "'Add to Cart' button is present");
         Assert.assertTrue(productsPage.isRemoveButtonPresent(productName), "'Remove' button is not present");
@@ -89,37 +93,34 @@ public class MobileSampleTest implements IAbstractTest, IMobileUtils {
     @Test()
     @MethodOwner(owner = "nknysh")
     public void verifyProductCanBeAddedToCart() {
-        LoginBasePage loginPage = initPage(getDriver(), LoginBasePage.class);
-        ProductsBasePage productsPage = loginPage.loginAsUser(User.STANDART);
-        String productName = productsPage.getNames().get(1);
+        ProductsPageBase productsPage = logIn(User.STANDART);
         String price = productsPage.getPriceText(productName);
         productsPage.clickAddToCartButton(productName);
-        CartBasePage cartBasePage = productsPage.clickCartImage();
-//        MenuPanelBasePage menuPanelBasePage = initPage(getDriver(), MenuPanelBasePage.class);
-//        CartBasePage cartBasePage = menuPanelBasePage.clickCartImage();
+        TopBarMenuBase menu = initPage(getDriver(), TopBarMenuBase.class);
+        CartPageBase cartBasePage = menu.clickCartImage();
         Assert.assertTrue(cartBasePage.isPageOpened(), "Cart page isn't opened");
-        String cartProductName = cartBasePage.getNames().get(0);
-        Assert.assertEquals(cartProductName, productName, "Names are not equal");
-        Assert.assertEquals(cartBasePage.getProductPrice(cartProductName), price, "Prices are not equal");
+        Assert.assertEquals(cartBasePage.getProductsSize(), 1, "Products sizes are not equal");
+        CartProductItemBase cartProduct = initPage(getDriver(), CartProductItemBase.class);
+        Assert.assertEquals(cartProduct.getProductPrice(productName), price, "Prices are not equal");
     }
 
     @Test()
     @MethodOwner(owner = "nknysh")
     public void verifyProductCanBeRemoved() {
-        LoginBasePage loginPage = initPage(getDriver(), LoginBasePage.class);
-        ProductsBasePage productsPage = loginPage.loginAsUser(User.STANDART);
-        String productName = productsPage.getNames().get(1);
+        ProductsPageBase productsPage = logIn(User.STANDART);
         productsPage.clickAddToCartButton(productName);
-//        MenuPanelBasePage menuPanelBasePage = initPage(getDriver(), MenuPanelBasePage.class);
-//        Assert.assertEquals(menuPanelBasePage.getCartImageText(), "1", "Sizes are not equal");
-//        CartBasePage cartBasePage = menuPanelBasePage.clickCartImage();
-        Assert.assertEquals(productsPage.getCartImageText(), "1", "Sizes are not equal");
-        CartBasePage cartPage = productsPage.clickCartImage();
+        TopBarMenuBase menu = initPage(getDriver(), TopBarMenuBase.class);
+        Assert.assertEquals(menu.getCartImageText(), "1", "Sizes are not equal");
+        CartPageBase cartPage = menu.clickCartImage();
         Assert.assertEquals(cartPage.getProductsSize(), 1, "Sizes are not equal");
-        cartPage.clickRemoveButton(productName);
+        CartProductItemBase cartProduct = initPage(getDriver(), CartProductItemBase.class);
+        cartProduct.clickRemoveButton(productName);
         Assert.assertEquals(cartPage.getProductsSize(), 0, "Sizes are not equal");
-//        Assert.assertFalse(menuPanelBasePage.isCartImageTextPresent(), "Cart icon has text");
-        Assert.assertFalse(productsPage.isCartImageTextPresent(), "Cart icon has text");
+        if (getDevice().getDeviceType() == DeviceType.Type.IOS_PHONE) {
+            Assert.assertEquals(menu.getCartImageText(), "", "Cart icon has text");
+        } else {
+            Assert.assertFalse(menu.isCartImageTextPresent(), "Cart icon has text");
+        }
         cartPage.clickContinueShoppingButton();
         Assert.assertTrue(productsPage.isAddToCartButtonPresent(productName), "'Add to Cart' button is not present");
         Assert.assertFalse(productsPage.isRemoveButtonPresent(productName), "'Remove' button is present");
@@ -128,33 +129,30 @@ public class MobileSampleTest implements IAbstractTest, IMobileUtils {
     @Test()
     @MethodOwner(owner = "nknysh")
     public void verifyCheckOverviewPage() {
-        LoginBasePage loginPage = initPage(getDriver(), LoginBasePage.class);
-        ProductsBasePage productsPage = loginPage.loginAsUser(User.STANDART);
-        String productName = productsPage.getNames().get(1);
+        ProductsPageBase productsPage = logIn(User.STANDART);
         productsPage.clickAddToCartButton(productName);
-        //        MenuPanelBasePage menuPanelBasePage = initPage(getDriver(), MenuPanelBasePage.class);
-//        CartBasePage cartBasePage = menuPanelBasePage.clickCartImage();
-        CartBasePage cartPage = productsPage.clickCartImage();
-        String price = cartPage.getProductPrice(productName);
-        CheckOutInformationBasePage checkOutInformationPage = cartPage.clickCheckOutButton();
+        CartPageBase cartPage = initPage(getDriver(), TopBarMenuBase.class).clickCartImage();
+        CartProductItemBase cartProduct = initPage(getDriver(), CartProductItemBase.class);
+        String price = cartProduct.getProductPrice(productName);
+        CheckOutInformationPageBase checkOutInformationPage = cartPage.clickCheckOutButton();
         Assert.assertTrue(checkOutInformationPage.isPageOpened(), "Check out information page isn't opened");
-        CheckOutOverviewBasePage checkOutOverviewPage = checkOutInformationPage.fillOutInformationForm("Test", "Test", "94147");
+        CheckOutOverviewPageBase checkOutOverviewPage = checkOutInformationPage.fillOutInformationForm("Test", "Test", "94147");
         Assert.assertTrue(checkOutOverviewPage.isPageOpened(), "Check out overview page isn't opened");
-        Assert.assertEquals(checkOutOverviewPage.getNames().get(0), productName, "Names are not equal");
-        Assert.assertEquals(checkOutOverviewPage.getProductPrice(productName), price, "Prices are not equal");
+        Assert.assertEquals(checkOutOverviewPage.getProductsSize(), 1, "Products sizes are not equal");
+        Assert.assertEquals(cartProduct.getProductPrice(productName), price, "Prices are not equal");
     }
 
     @Test()
     @MethodOwner(owner = "nknysh")
     public void verifyCheckCompletePage() {
-        LoginBasePage loginPage = initPage(getDriver(), LoginBasePage.class);
-        ProductsBasePage productsPage = loginPage.loginAsUser(User.STANDART);
-        String productName = productsPage.getNames().get(1);
+        LoginPageBase loginPage = initPage(getDriver(), LoginPageBase.class);
+        ProductsPageBase productsPage = loginPage.loginAsUser(User.STANDART);
         productsPage.clickAddToCartButton(productName);
-        CartBasePage cartPage = productsPage.clickCartImage();
-        CheckOutInformationBasePage checkOutInformationPage = cartPage.clickCheckOutButton();
-        CheckOutOverviewBasePage checkOutOverviewPage = checkOutInformationPage.fillOutInformationForm("Test", "Test", "94147");
-        CheckOutCompleteBasePage checkOutComplete = checkOutOverviewPage.clickFinishButton();
+        CartPageBase cartPage = initPage(getDriver(), TopBarMenuBase.class).clickCartImage();
+        CheckOutInformationPageBase checkOutInformationPage = cartPage.clickCheckOutButton();
+        CheckOutOverviewPageBase checkOutOverviewPage = checkOutInformationPage.fillOutInformationForm("Test", "Test", "94147");
+        CheckOutCompletePageBase checkOutComplete = checkOutOverviewPage.clickFinishButton();
         Assert.assertTrue(checkOutComplete.isPageOpened(), "Check out complete is not opened");
+        Assert.assertTrue(checkOutComplete.isPonyExpressImagePresent(), "Pony express ia not present");
     }
 }
