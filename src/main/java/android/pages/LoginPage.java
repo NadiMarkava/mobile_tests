@@ -38,14 +38,14 @@ public class LoginPage extends LoginPageBase {
     @Override
     public ProductsPageBase clickLoginButton() {
         loginButtonLocator.click();
-        return initPage(getDriver(), ProductsPageBase.class);
+        return initPage(ProductsPageBase.class);
     }
 
     @Override
     public ProductsPageBase loginAsUser(User user) {
         clickUser(user);
         clickLoginButton();
-        return initPage(getDriver(), ProductsPageBase.class);
+        return initPage(ProductsPageBase.class);
     }
 
     @Override

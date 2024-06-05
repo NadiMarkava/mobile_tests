@@ -5,10 +5,8 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import common.components.TopBarMenuBase;
 import common.pages.CartPageBase;
-import common.pages.SwagLabsAbstractPage;
 import enums.NavMenu;
 import org.openqa.selenium.WebDriver;
-import utils.ClickUtil;
 
 @DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = TopBarMenuBase.class)
 public class TopBarMenu extends TopBarMenuBase {
@@ -31,9 +29,10 @@ public class TopBarMenu extends TopBarMenuBase {
 
     @Override
     public CartPageBase clickCartImage() {
-        ClickUtil clickUtil = new ClickUtil();
-        clickUtil.tapByCoordinates(cartImage);
-        return initPage(getDriver(), CartPageBase.class);
+        int y = cartImage.getLocation().getY() + cartImage.getSize().getHeight() - 5;
+        int x = cartImage.getLocation().getX() + cartImage.getSize().getWidth() / 2;
+        tap(x, y);
+        return initPage(CartPageBase.class);
     }
 
     @Override
@@ -48,13 +47,13 @@ public class TopBarMenu extends TopBarMenuBase {
 
     @Override
     public void clickNavMenu() {
-        ClickUtil clickUtil = new ClickUtil();
-        clickUtil.tapByCoordinates(navMenu);
+        int y = navMenu.getLocation().getY() + navMenu.getSize().getHeight() - 5;
+        int x = navMenu.getLocation().getX() + navMenu.getSize().getWidth() / 2;
+        tap(x, y);
     }
 
     @Override
-    public SwagLabsAbstractPage clickNavItem(NavMenu navMenu) {
+    public void clickNavItem(NavMenu navMenu) {
         navBarItem.format(navMenu.getName()).click();
-        return initPage(getDriver(), SwagLabsAbstractPage.class);
     }
 }

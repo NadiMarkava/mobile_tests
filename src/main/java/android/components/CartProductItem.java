@@ -10,7 +10,7 @@ import org.openqa.selenium.support.FindBy;
 public class CartProductItem extends CartProductItemBase {
 
     @FindBy(xpath = "//android.widget.TextView[@text='%s']/../following-sibling::android.view.ViewGroup[@content-desc='test-Price']/android.widget.TextView")
-    private ExtendedWebElement price;
+    private ExtendedWebElement pricelabel;
 
     @FindBy(xpath = "//android.widget.TextView[@text='%s']/../..//android.view.ViewGroup[@content-desc='test-REMOVE']")
     private ExtendedWebElement removeButton;
@@ -21,7 +21,7 @@ public class CartProductItem extends CartProductItemBase {
 
     @Override
     public String getProductPrice(String productName) {
-        return price.format(productName).getText();
+        return pricelabel.format(productName).getText();
     }
 
     @Override

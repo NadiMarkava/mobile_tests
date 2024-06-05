@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 
 import java.util.List;
 
-public abstract class ProductsPageBase extends SwagLabsAbstractPage {
+public abstract class ProductsPageBase extends SwagLabsAbstractPageBase {
 
     public ProductsPageBase(WebDriver driver) {
         super(driver);
@@ -29,5 +29,5 @@ public abstract class ProductsPageBase extends SwagLabsAbstractPage {
 
     public abstract void clickRemoveButton(String productName);
 
-    public abstract void clickToggleIcon();
+    public abstract void clickProductsToggleIcon();
 }

@@ -4,7 +4,6 @@ import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import common.components.TopBarMenuBase;
 import common.pages.CartPageBase;
-import common.pages.SwagLabsAbstractPage;
 import enums.NavMenu;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
@@ -12,10 +11,10 @@ import org.openqa.selenium.support.FindBy;
 @DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = TopBarMenuBase.class)
 public class TopBarMenu extends TopBarMenuBase {
 
-    @FindBy(xpath = "")
+    @FindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Menu']")
     private ExtendedWebElement navMenu;
 
-    @FindBy(xpath = "")
+    @FindBy(xpath = "//android.view.ViewGroup[@content-desc='%s']")
     private ExtendedWebElement navBarItem;
 
     @FindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Cart']/android.view.ViewGroup/android.widget.ImageView")
@@ -50,8 +49,7 @@ public class TopBarMenu extends TopBarMenuBase {
     }
 
     @Override
-    public SwagLabsAbstractPage clickNavItem(NavMenu navMenu) {
+    public void clickNavItem(NavMenu navMenu) {
         navBarItem.format(navMenu.getName()).click();
-        return initPage(getDriver(), SwagLabsAbstractPage.class);
     }
 }

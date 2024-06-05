@@ -12,7 +12,7 @@ public class CartProductItem extends CartProductItemBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$type == 'XCUIElementTypeStaticText' AND label == '%s'$][-2]/**/XCUIElementTypeOther[`name == 'test-Price'`]/**/XCUIElementTypeStaticText")
     private ExtendedWebElement price;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$type == 'XCUIElementTypeStaticText' AND label == '%s'$][-2]/**/XCUIElementTypeOther[`name == 'test-Price'`]/**/XCUIElementTypeOther[`label == 'REMOVE'`][1]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$type == 'XCUIElementTypeStaticText' AND label == '%s'$][-2]/**/XCUIElementTypeOther[`label == 'REMOVE'`]")
     private ExtendedWebElement removeButton;
 
     public CartProductItem(WebDriver driver) {

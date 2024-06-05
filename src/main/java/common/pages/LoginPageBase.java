@@ -3,7 +3,7 @@ package common.pages;
 import enums.User;
 import org.openqa.selenium.WebDriver;
 
-public abstract class LoginPageBase extends SwagLabsAbstractPage {
+public abstract class LoginPageBase extends SwagLabsAbstractPageBase {
 
     public LoginPageBase(WebDriver driver) {
         super(driver);

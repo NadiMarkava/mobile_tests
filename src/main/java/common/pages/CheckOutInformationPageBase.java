@@ -2,7 +2,7 @@ package common.pages;
 
 import org.openqa.selenium.WebDriver;
 
-public abstract class CheckOutInformationPageBase extends SwagLabsAbstractPage {
+public abstract class CheckOutInformationPageBase extends SwagLabsAbstractPageBase {
 
     public CheckOutInformationPageBase(WebDriver driver) {
         super(driver);

@@ -90,7 +90,7 @@ public class ProductsPage extends ProductsPageBase {
     @Override
     public ProductDetailPageBase clickProductName(String name) {
         productName.format(name).click();
-        return initPage(getDriver(), ProductDetailPageBase.class);
+        return initPage(ProductDetailPageBase.class);
     }
 
     @Override
@@ -99,7 +99,7 @@ public class ProductsPage extends ProductsPageBase {
     }
 
     @Override
-    public void clickToggleIcon() {
+    public void clickProductsToggleIcon() {
         toggle.click();
     }
 }

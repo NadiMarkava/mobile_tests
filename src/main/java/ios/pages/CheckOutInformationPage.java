@@ -58,7 +58,7 @@ public class CheckOutInformationPage extends CheckOutInformationPageBase {
     @Override
     public CheckOutOverviewPageBase clickContinueButton() {
         continueButton.click();
-        return initPage(getDriver(), CheckOutOverviewPageBase.class);
+        return initPage(CheckOutOverviewPageBase.class);
     }
 
     @Override
@@ -67,6 +67,6 @@ public class CheckOutInformationPage extends CheckOutInformationPageBase {
         typeLastName(lastName);
         typeZipCode(zipCode);
         clickContinueButton();
-        return initPage(getDriver(), CheckOutOverviewPageBase.class);
+        return initPage(CheckOutOverviewPageBase.class);
     }
 }

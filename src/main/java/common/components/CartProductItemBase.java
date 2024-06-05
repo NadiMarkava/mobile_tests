@@ -1,9 +1,9 @@
 package common.components;
 
-import common.pages.SwagLabsAbstractPage;
+import common.pages.SwagLabsAbstractPageBase;
 import org.openqa.selenium.WebDriver;
 
-public abstract class CartProductItemBase extends SwagLabsAbstractPage {
+public abstract class CartProductItemBase extends SwagLabsAbstractPageBase {
     public CartProductItemBase(WebDriver driver) {
         super(driver);
     }

@@ -1,6 +1,7 @@
 package android.pages;
 
 import com.zebrunner.carina.utils.factory.DeviceType;
+import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.decorator.PageOpeningStrategy;
 import common.pages.ProductDetailPageBase;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = ProductsPageBase.class)
-public class ProductsPage extends ProductsPageBase {
+public class ProductsPage extends ProductsPageBase implements IMobileUtils {
 
     @FindBy(xpath = "//android.widget.TextView[@text='PRODUCTS']")
     private ExtendedWebElement title;
@@ -69,6 +70,7 @@ public class ProductsPage extends ProductsPageBase {
 
     @Override
     public List<Double> getPrices() {
+        swipe(productPrices.get(1));
         return productPrices.stream().map(p -> Double.parseDouble(p.getText().replace("$", ""))).collect(Collectors.toList());
     }
 
@@ -90,7 +92,7 @@ public class ProductsPage extends ProductsPageBase {
     @Override
     public ProductDetailPageBase clickProductName(String name) {
         productName.format(name).click();
-        return initPage(getDriver(), ProductDetailPageBase.class);
+        return initPage(ProductDetailPageBase.class);
     }
 
     @Override
@@ -99,7 +101,7 @@ public class ProductsPage extends ProductsPageBase {
     }
 
     @Override
-    public void clickToggleIcon() {
+    public void clickProductsToggleIcon() {
         toggle.click();
     }
 }

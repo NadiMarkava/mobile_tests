@@ -58,15 +58,15 @@ public class CheckOutInformationPage extends CheckOutInformationPageBase {
     @Override
     public CheckOutOverviewPageBase clickContinueButton() {
         continueButton.click();
-        return initPage(getDriver(), CheckOutOverviewPageBase.class);
+        return initPage(CheckOutOverviewPageBase.class);
     }
 
     @Override
-    public CheckOutOverviewPage fillOutInformationForm(String name, String lastName, String zipCode) {
+    public CheckOutOverviewPageBase fillOutInformationForm(String name, String lastName, String zipCode) {
         typeFirstName(name);
         typeLastName(lastName);
         typeZipCode(zipCode);
         clickContinueButton();
-        return new CheckOutOverviewPage(getDriver());
+        return initPage(CheckOutOverviewPageBase.class);
     }
 }

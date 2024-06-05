@@ -1,31 +1,30 @@
 package enums;
 
+import common.pages.LoginPageBase;
+import common.pages.ProductsPageBase;
+import common.pages.SwagLabsAbstractPageBase;
+
 public enum NavMenu {
 
-    ALL_ITEMS("ALL ITEMS"),
+    ALL_ITEMS("test-ALL ITEMS", ProductsPageBase.class),
 
-    WEB_VIEW("WEBVIEW"),
+    LOG_OUT("test-LOGOUT", LoginPageBase.class);
 
-    QA_CODE_SCANNER("QR CODE SCANNER"),
-
-    GEO_LOCATION("GEO LOCATION"),
-
-    DRAWING("DRAWING"),
-
-    ABOUT("ABOUT"),
-
-    LOG_OUT("LOGOUT"),
-
-    RESET_APP_STATE("RESET APP STATE");
 
     private final String label;
+    private final Class<? extends SwagLabsAbstractPageBase> basePage;
 
 
-    NavMenu(String name) {
+    NavMenu(String name, Class<? extends SwagLabsAbstractPageBase> page) {
         this.label = name;
+        this.basePage = page;
     }
 
     public String getName() {
         return label;
+    }
+
+    public Class<? extends SwagLabsAbstractPageBase> getPage() {
+        return basePage;
     }
 }

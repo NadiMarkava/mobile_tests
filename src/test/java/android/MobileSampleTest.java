@@ -20,17 +20,16 @@ public class MobileSampleTest extends SwagLabsAbstractTest {
     @Test()
     @MethodOwner(owner = "nknysh")
     public void verifySuccessLogin() {
-        ProductsPageBase productsPage = logIn(User.STANDART);
+        ProductsPageBase productsPage = getAuthUtil().logIn(User.STANDART);
         Assert.assertTrue(productsPage.isPageOpened(), "Products page isn't opened");
     }
 
     @Test()
     @MethodOwner(owner = "nknysh")
     public void verifyUserCanLogOut() {
-        ProductsPageBase productsPage = logIn(User.STANDART);
+        ProductsPageBase productsPage = getAuthUtil().logIn(User.STANDART);
         Assert.assertTrue(productsPage.isPageOpened(), "Products page isn't opened");
-        TopBarMenuBase menu = initPage(getDriver(), TopBarMenuBase.class);
-        LoginPageBase loginPage = (LoginPageBase) openNavMenuLink(NavMenu.LOG_OUT);
+        LoginPageBase loginPage = (LoginPageBase) getNavUtil().clickNavMenuLink(NavMenu.LOG_OUT);
         Assert.assertTrue(loginPage.isPageOpened(), "Login page isn't opened");
     }
 
@@ -46,7 +45,7 @@ public class MobileSampleTest extends SwagLabsAbstractTest {
     @Test()
     @MethodOwner(owner = "nknysh")
     public void verifyProductCard() {
-        ProductsPageBase productsPage = logIn(User.STANDART);
+        ProductsPageBase productsPage = getAuthUtil().logIn(User.STANDART);
         Assert.assertTrue(productsPage.isImagePresent(productName), "Image is not present");
         Assert.assertTrue(productName.matches("[a-zA-Z]+\\s[a-zA-Z]+\\s[a-zA-Z]+"), "Name does not match");
         Assert.assertTrue(productsPage.getPriceText(productName).matches("\\$[0-9]{1,2}.[0-9]{1,2}"), "Price does not match");
@@ -56,7 +55,7 @@ public class MobileSampleTest extends SwagLabsAbstractTest {
     @Test()
     @MethodOwner(owner = "nknysh")
     public void verifyProductDetailPage() {
-        ProductsPageBase productsPage = logIn(User.STANDART);
+        ProductsPageBase productsPage = getAuthUtil().logIn(User.STANDART);
         String price = productsPage.getPriceText(productName);
         ProductDetailPageBase productDetailPage = productsPage.clickProductName(productName);
         Assert.assertEquals(productDetailPage.getProductName(), productName, "Names are not equal");
@@ -66,8 +65,8 @@ public class MobileSampleTest extends SwagLabsAbstractTest {
     @Test()
     @MethodOwner(owner = "nknysh")
     public void verifySortBy() {
-        ProductsPageBase productsPage = logIn(User.STANDART);
-        productsPage.clickToggleIcon();
+        ProductsPageBase productsPage = getAuthUtil().logIn(User.STANDART);
+        productsPage.clickProductsToggleIcon();
         List<Double> beforePrices = productsPage.getPrices();
         productsPage.selectSortItem(SortItem.LOWHIGH);
         Assert.assertNotEquals(beforePrices, productsPage.getPrices(), "Prices are equal");
@@ -81,7 +80,7 @@ public class MobileSampleTest extends SwagLabsAbstractTest {
     @Test()
     @MethodOwner(owner = "nknysh")
     public void verifyAddToCartAndRemoveButtons() {
-        ProductsPageBase productsPage = logIn(User.STANDART);
+        ProductsPageBase productsPage = getAuthUtil().logIn(User.STANDART);
         productsPage.clickAddToCartButton(productName);
         Assert.assertFalse(productsPage.isAddToCartButtonPresent(productName), "'Add to Cart' button is present");
         Assert.assertTrue(productsPage.isRemoveButtonPresent(productName), "'Remove' button is not present");
@@ -93,13 +92,13 @@ public class MobileSampleTest extends SwagLabsAbstractTest {
     @Test()
     @MethodOwner(owner = "nknysh")
     public void verifyProductCanBeAddedToCart() {
-        ProductsPageBase productsPage = logIn(User.STANDART);
+        ProductsPageBase productsPage = getAuthUtil().logIn(User.STANDART);
         String price = productsPage.getPriceText(productName);
         productsPage.clickAddToCartButton(productName);
         TopBarMenuBase menu = initPage(getDriver(), TopBarMenuBase.class);
         CartPageBase cartBasePage = menu.clickCartImage();
         Assert.assertTrue(cartBasePage.isPageOpened(), "Cart page isn't opened");
-        Assert.assertEquals(cartBasePage.getProductsSize(), 1, "Products sizes are not equal");
+        Assert.assertEquals(cartBasePage.getProductsCount(), 1, "Products sizes are not equal");
         CartProductItemBase cartProduct = initPage(getDriver(), CartProductItemBase.class);
         Assert.assertEquals(cartProduct.getProductPrice(productName), price, "Prices are not equal");
     }
@@ -107,15 +106,15 @@ public class MobileSampleTest extends SwagLabsAbstractTest {
     @Test()
     @MethodOwner(owner = "nknysh")
     public void verifyProductCanBeRemoved() {
-        ProductsPageBase productsPage = logIn(User.STANDART);
+        ProductsPageBase productsPage = getAuthUtil().logIn(User.STANDART);
         productsPage.clickAddToCartButton(productName);
         TopBarMenuBase menu = initPage(getDriver(), TopBarMenuBase.class);
         Assert.assertEquals(menu.getCartImageText(), "1", "Sizes are not equal");
         CartPageBase cartPage = menu.clickCartImage();
-        Assert.assertEquals(cartPage.getProductsSize(), 1, "Sizes are not equal");
+        Assert.assertEquals(cartPage.getProductsCount(), 1, "Sizes are not equal");
         CartProductItemBase cartProduct = initPage(getDriver(), CartProductItemBase.class);
         cartProduct.clickRemoveButton(productName);
-        Assert.assertEquals(cartPage.getProductsSize(), 0, "Sizes are not equal");
+        Assert.assertEquals(cartPage.getProductsCount(), 0, "Sizes are not equal");
         if (getDevice().getDeviceType() == DeviceType.Type.IOS_PHONE) {
             Assert.assertEquals(menu.getCartImageText(), "", "Cart icon has text");
         } else {
@@ -129,7 +128,7 @@ public class MobileSampleTest extends SwagLabsAbstractTest {
     @Test()
     @MethodOwner(owner = "nknysh")
     public void verifyCheckOverviewPage() {
-        ProductsPageBase productsPage = logIn(User.STANDART);
+        ProductsPageBase productsPage = getAuthUtil().logIn(User.STANDART);
         productsPage.clickAddToCartButton(productName);
         CartPageBase cartPage = initPage(getDriver(), TopBarMenuBase.class).clickCartImage();
         CartProductItemBase cartProduct = initPage(getDriver(), CartProductItemBase.class);
@@ -145,8 +144,7 @@ public class MobileSampleTest extends SwagLabsAbstractTest {
     @Test()
     @MethodOwner(owner = "nknysh")
     public void verifyCheckCompletePage() {
-        LoginPageBase loginPage = initPage(getDriver(), LoginPageBase.class);
-        ProductsPageBase productsPage = loginPage.loginAsUser(User.STANDART);
+        ProductsPageBase productsPage = getAuthUtil().logIn(User.STANDART);
         productsPage.clickAddToCartButton(productName);
         CartPageBase cartPage = initPage(getDriver(), TopBarMenuBase.class).clickCartImage();
         CheckOutInformationPageBase checkOutInformationPage = cartPage.clickCheckOutButton();

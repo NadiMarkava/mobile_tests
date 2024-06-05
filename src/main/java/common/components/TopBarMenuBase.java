@@ -1,11 +1,12 @@
 package common.components;
 
+import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import common.pages.CartPageBase;
-import common.pages.SwagLabsAbstractPage;
+import common.pages.SwagLabsAbstractPageBase;
 import enums.NavMenu;
 import org.openqa.selenium.WebDriver;
 
-public abstract class TopBarMenuBase extends SwagLabsAbstractPage {
+public abstract class TopBarMenuBase extends SwagLabsAbstractPageBase implements IMobileUtils {
 
     public TopBarMenuBase(WebDriver driver) {
         super(driver);
@@ -19,5 +20,5 @@ public abstract class TopBarMenuBase extends SwagLabsAbstractPage {
 
     public abstract void clickNavMenu();
 
-    public abstract SwagLabsAbstractPage clickNavItem(NavMenu navMenu);
+    public abstract void clickNavItem(NavMenu navMenu);
 }

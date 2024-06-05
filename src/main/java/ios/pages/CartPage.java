@@ -32,17 +32,17 @@ public class CartPage extends CartPageBase {
         setUiLoadedMarker(title);
     }
 
-    public int getProductsSize() {
+    public int getProductsCount() {
         return products.size();
     }
 
     public ProductsPageBase clickContinueShoppingButton() {
         continueShoppingButton.click();
-        return initPage(getDriver(), ProductsPageBase.class);
+        return initPage(ProductsPageBase.class);
     }
 
     public CheckOutInformationPageBase clickCheckOutButton() {
         checkOutButton.click();
-        return initPage(getDriver(), CheckOutInformationPageBase.class);
+        return initPage(CheckOutInformationPageBase.class);
     }
 }

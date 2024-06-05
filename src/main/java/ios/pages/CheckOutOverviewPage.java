@@ -45,6 +45,6 @@ public class CheckOutOverviewPage extends CheckOutOverviewPageBase {
     public CheckOutCompletePageBase clickFinishButton() {
         swipe(finishButton);
         finishButton.click();
-        return initPage(getDriver(), CheckOutCompletePageBase.class);
+        return initPage(CheckOutCompletePageBase.class);
     }
 }

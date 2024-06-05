@@ -4,6 +4,7 @@ import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.decorator.PageOpeningStrategy;
 import common.pages.CartPageBase;
+import common.pages.CheckOutInformationPageBase;
 import common.pages.ProductsPageBase;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
@@ -32,19 +33,19 @@ public class CartPage extends CartPageBase {
     }
 
     @Override
-    public int getProductsSize() {
+    public int getProductsCount() {
         return products.size();
     }
 
     @Override
     public ProductsPageBase clickContinueShoppingButton() {
         continueShoppingButton.click();
-        return initPage(getDriver(), ProductsPageBase.class);
+        return initPage(ProductsPageBase.class);
     }
 
     @Override
-    public CheckOutInformationPage clickCheckOutButton() {
+    public CheckOutInformationPageBase clickCheckOutButton() {
         checkOutButton.click();
-        return new CheckOutInformationPage(getDriver());
+        return initPage(CheckOutInformationPageBase.class);
     }
 }
