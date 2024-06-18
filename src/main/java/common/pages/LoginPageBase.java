@@ -16,4 +16,6 @@ public abstract class LoginPageBase extends SwagLabsAbstractPageBase {
     public abstract ProductsPageBase loginAsUser(User user);
 
     public abstract String getErrorMessage();
+
+    public abstract boolean isImagePresent();
 }

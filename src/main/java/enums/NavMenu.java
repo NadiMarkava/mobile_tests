@@ -1,5 +1,6 @@
 package enums;
 
+import common.pages.DrawingPageBase;
 import common.pages.LoginPageBase;
 import common.pages.ProductsPageBase;
 import common.pages.SwagLabsAbstractPageBase;
@@ -8,7 +9,9 @@ public enum NavMenu {
 
     ALL_ITEMS("test-ALL ITEMS", ProductsPageBase.class),
 
-    LOG_OUT("test-LOGOUT", LoginPageBase.class);
+    LOG_OUT("test-LOGOUT", LoginPageBase.class),
+
+    DRAWING("test-DRAWING", DrawingPageBase.class);
 
 
     private final String label;

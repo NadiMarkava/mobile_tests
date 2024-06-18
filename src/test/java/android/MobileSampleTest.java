@@ -44,6 +44,15 @@ public class MobileSampleTest extends SwagLabsAbstractTest {
 
     @Test()
     @MethodOwner(owner = "nknysh")
+    public void verifyUserCanDrawing() {
+        getAuthUtil().logIn(User.STANDART);
+        DrawingPageBase drawingPageBase = (DrawingPageBase) getNavUtil().clickNavMenuLink(NavMenu.DRAWING);
+        drawingPageBase.drawPicture();
+        Assert.assertTrue(drawingPageBase.isDrawingPresent(), "Image is not present");
+    }
+
+    @Test()
+    @MethodOwner(owner = "nknysh")
     public void verifyProductCard() {
         ProductsPageBase productsPage = getAuthUtil().logIn(User.STANDART);
         Assert.assertTrue(productsPage.isImagePresent(productName), "Image is not present");

@@ -14,7 +14,7 @@ public class TopBarMenu extends TopBarMenuBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == 'test-Menu'`]")
     private ExtendedWebElement navMenu;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == '%s'`]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == '%s'`]")
     private ExtendedWebElement navBarItem;
 
     @ExtendedFindBy(iosPredicate = "name == 'test-Cart'")

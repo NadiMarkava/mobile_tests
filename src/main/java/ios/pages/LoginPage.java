@@ -7,6 +7,8 @@ import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import common.pages.LoginPageBase;
 import common.pages.ProductsPageBase;
 import enums.User;
+import io.appium.java_client.HasSettings;
+import io.appium.java_client.Setting;
 import org.openqa.selenium.WebDriver;
 
 @DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = LoginPageBase.class)
@@ -23,6 +25,9 @@ public class LoginPage extends LoginPageBase {
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == 'test-Error message'`]")
     private ExtendedWebElement errorMessage;
+
+    @ExtendedFindBy(image = "images/login-bot.png")
+    private ExtendedWebElement loginImage;
 
     public LoginPage(WebDriver driver) {
         super(driver);
@@ -51,5 +56,12 @@ public class LoginPage extends LoginPageBase {
     @Override
     public String getErrorMessage() {
         return errorMessage.getText();
+    }
+
+    @Override
+    public boolean isImagePresent() {
+        HasSettings driver = (HasSettings) getDriver();
+        driver.setSetting(Setting.IMAGE_MATCH_THRESHOLD, 0.4);
+        return loginImage.isElementPresent();
     }
 }

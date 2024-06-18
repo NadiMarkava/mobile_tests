@@ -3,9 +3,12 @@ package android.pages;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.decorator.PageOpeningStrategy;
+import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import common.pages.LoginPageBase;
 import common.pages.ProductsPageBase;
 import enums.User;
+import io.appium.java_client.HasSettings;
+import io.appium.java_client.Setting;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
@@ -23,6 +26,9 @@ public class LoginPage extends LoginPageBase {
 
     @FindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Error message']/android.widget.TextView")
     private ExtendedWebElement errorMessage;
+
+    @ExtendedFindBy(image = "images/login-bot.png")
+    private ExtendedWebElement loginImage;
 
     public LoginPage(WebDriver driver) {
         super(driver);
@@ -51,5 +57,12 @@ public class LoginPage extends LoginPageBase {
     @Override
     public String getErrorMessage() {
         return errorMessage.getText();
+    }
+
+    @Override
+    public boolean isImagePresent() {
+        HasSettings driver = (HasSettings) getDriver();
+        driver.setSetting(Setting.IMAGE_MATCH_THRESHOLD, 0.3);
+        return loginImage.isElementPresent();
     }
 }
