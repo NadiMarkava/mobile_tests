@@ -9,7 +9,7 @@ public abstract class DrawingPageBase extends SwagLabsAbstractPageBase implement
         super(driver);
     }
 
-    public abstract void drawPicture();
+    public abstract void drawLine();
 
-    public abstract boolean isDrawingPresent();
+    public abstract boolean isDrawnLinePresent();
 }

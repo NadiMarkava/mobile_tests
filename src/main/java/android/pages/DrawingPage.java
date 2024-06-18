@@ -29,7 +29,7 @@ public class DrawingPage extends DrawingPageBase {
     }
 
     @Override
-    public void drawPicture() {
+    public void drawLine() {
         int startX = signature.getLocation().getX() + signature.getSize().getWidth() / 10;
         int startY = signature.getLocation().getY() + signature.getSize().getHeight() / 10;
         int endX = startX * 7;
@@ -37,7 +37,7 @@ public class DrawingPage extends DrawingPageBase {
     }
 
     @Override
-    public boolean isDrawingPresent() {
+    public boolean isDrawnLinePresent() {
         HasSettings driver = (HasSettings) getDriver();
         driver.setSetting(Setting.IMAGE_MATCH_THRESHOLD, 0.4);
         return drawingImage.isElementPresent();

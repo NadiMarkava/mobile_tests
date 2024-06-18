@@ -59,7 +59,7 @@ public class LoginPage extends LoginPageBase {
     }
 
     @Override
-    public boolean isImagePresent() {
+    public boolean isRobotImagePresent() {
         HasSettings driver = (HasSettings) getDriver();
         driver.setSetting(Setting.IMAGE_MATCH_THRESHOLD, 0.4);
         return loginImage.isElementPresent();

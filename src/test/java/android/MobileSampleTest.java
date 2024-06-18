@@ -31,6 +31,7 @@ public class MobileSampleTest extends SwagLabsAbstractTest {
         Assert.assertTrue(productsPage.isPageOpened(), "Products page isn't opened");
         LoginPageBase loginPage = (LoginPageBase) getNavUtil().clickNavMenuLink(NavMenu.LOG_OUT);
         Assert.assertTrue(loginPage.isPageOpened(), "Login page isn't opened");
+        Assert.assertTrue(loginPage.isRobotImagePresent(), "Image isn't present");
     }
 
     @Test()
@@ -47,8 +48,8 @@ public class MobileSampleTest extends SwagLabsAbstractTest {
     public void verifyUserCanDrawing() {
         getAuthUtil().logIn(User.STANDART);
         DrawingPageBase drawingPageBase = (DrawingPageBase) getNavUtil().clickNavMenuLink(NavMenu.DRAWING);
-        drawingPageBase.drawPicture();
-        Assert.assertTrue(drawingPageBase.isDrawingPresent(), "Image is not present");
+        drawingPageBase.drawLine();
+        Assert.assertTrue(drawingPageBase.isDrawnLinePresent(), "Image is not present");
     }
 
     @Test()

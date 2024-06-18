@@ -17,5 +17,5 @@ public abstract class LoginPageBase extends SwagLabsAbstractPageBase {
 
     public abstract String getErrorMessage();
 
-    public abstract boolean isImagePresent();
+    public abstract boolean isRobotImagePresent();
 }
