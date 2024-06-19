@@ -17,6 +17,12 @@ public class LoginPage extends LoginPageBase {
     @ExtendedFindBy(iosPredicate = "name == 'assets/src/img/swag-labs-logo.png'")
     private ExtendedWebElement logo;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == 'Username'`][1]")
+    private ExtendedWebElement usernameField;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == 'Password'`][1]")
+    private ExtendedWebElement passwordField;
+
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == '%s'`]")
     private ExtendedWebElement usernameTap;
 
@@ -33,6 +39,21 @@ public class LoginPage extends LoginPageBase {
         super(driver);
         setPageOpeningStrategy(PageOpeningStrategy.BY_ELEMENT);
         setUiLoadedMarker(logo);
+    }
+
+    @Override
+    public boolean isUsernameFieldPresent() {
+        return usernameField.isElementPresent();
+    }
+
+    @Override
+    public boolean isPasswordFieldPresent() {
+        return passwordField.isElementPresent();
+    }
+
+    @Override
+    public boolean isLoginButtonPresent() {
+        return loginButtonLocator.isElementPresent();
     }
 
     @Override

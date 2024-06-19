@@ -19,6 +19,17 @@ public class MobileSampleTest extends SwagLabsAbstractTest {
 
     @Test()
     @MethodOwner(owner = "nknysh")
+    public void verifyLogInPage() {
+        LoginPageBase loginPage = initPage(getDriver(), LoginPageBase.class);
+        Assert.assertTrue(loginPage.isPageOpened(), "Login page isn't opened");
+        Assert.assertTrue(loginPage.isUsernameFieldPresent(), "Field is not present");
+        Assert.assertTrue(loginPage.isPasswordFieldPresent(), "Field is not present");
+        Assert.assertTrue(loginPage.isLoginButtonPresent(), "Button is not present");
+        Assert.assertTrue(loginPage.isRobotImagePresent(), "Image isn't present");
+    }
+
+    @Test()
+    @MethodOwner(owner = "nknysh")
     public void verifySuccessLogin() {
         ProductsPageBase productsPage = getAuthUtil().logIn(User.STANDART);
         Assert.assertTrue(productsPage.isPageOpened(), "Products page isn't opened");
@@ -31,7 +42,6 @@ public class MobileSampleTest extends SwagLabsAbstractTest {
         Assert.assertTrue(productsPage.isPageOpened(), "Products page isn't opened");
         LoginPageBase loginPage = (LoginPageBase) getNavUtil().clickNavMenuLink(NavMenu.LOG_OUT);
         Assert.assertTrue(loginPage.isPageOpened(), "Login page isn't opened");
-        Assert.assertTrue(loginPage.isRobotImagePresent(), "Image isn't present");
     }
 
     @Test()

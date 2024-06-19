@@ -9,6 +9,12 @@ public abstract class LoginPageBase extends SwagLabsAbstractPageBase {
         super(driver);
     }
 
+    public abstract boolean isUsernameFieldPresent();
+
+    public abstract boolean isPasswordFieldPresent();
+
+    public abstract boolean isLoginButtonPresent();
+
     public abstract void clickUser(User user);
 
     public abstract ProductsPageBase clickLoginButton();

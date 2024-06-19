@@ -18,6 +18,12 @@ public class LoginPage extends LoginPageBase {
     @FindBy(xpath = "//android.widget.ScrollView[@content-desc='test-Login']//android.widget.ImageView[1]")
     private ExtendedWebElement logo;
 
+    @FindBy(xpath = "//android.widget.EditText[@text='Username']")
+    private ExtendedWebElement usernameField;
+
+    @FindBy(xpath = "//android.widget.EditText[@text='Password']")
+    private ExtendedWebElement passwordField;
+
     @FindBy(xpath = "//android.widget.TextView[@text='%s']")
     private ExtendedWebElement usernameTap;
 
@@ -34,6 +40,21 @@ public class LoginPage extends LoginPageBase {
         super(driver);
         setPageOpeningStrategy(PageOpeningStrategy.BY_ELEMENT);
         setUiLoadedMarker(logo);
+    }
+
+    @Override
+    public boolean isUsernameFieldPresent() {
+        return usernameField.isElementPresent();
+    }
+
+    @Override
+    public boolean isPasswordFieldPresent() {
+        return passwordField.isElementPresent();
+    }
+
+    @Override
+    public boolean isLoginButtonPresent() {
+        return loginButtonLocator.isElementPresent();
     }
 
     @Override
