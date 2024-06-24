@@ -19,6 +19,17 @@ public class MobileSampleTest extends SwagLabsAbstractTest {
 
     @Test()
     @MethodOwner(owner = "nknysh")
+    public void verifyLogInPage() {
+        LoginPageBase loginPage = initPage(getDriver(), LoginPageBase.class);
+        Assert.assertTrue(loginPage.isPageOpened(), "Login page isn't opened");
+        Assert.assertTrue(loginPage.isUsernameFieldPresent(), "Field is not present");
+        Assert.assertTrue(loginPage.isPasswordFieldPresent(), "Field is not present");
+        Assert.assertTrue(loginPage.isLoginButtonPresent(), "Button is not present");
+        Assert.assertTrue(loginPage.isRobotImagePresent(), "Image isn't present");
+    }
+
+    @Test()
+    @MethodOwner(owner = "nknysh")
     public void verifySuccessLogin() {
         ProductsPageBase productsPage = getAuthUtil().logIn(User.STANDART);
         Assert.assertTrue(productsPage.isPageOpened(), "Products page isn't opened");
@@ -40,6 +51,15 @@ public class MobileSampleTest extends SwagLabsAbstractTest {
         loginPage.loginAsUser(User.LOCKED);
         Assert.assertTrue(loginPage.isPageOpened(), "Login page isn't opened");
         Assert.assertEquals(loginPage.getErrorMessage(), "Sorry, this user has been locked out.", "Error messages are not equal");
+    }
+
+    @Test()
+    @MethodOwner(owner = "nknysh")
+    public void verifyUserCanDrawing() {
+        getAuthUtil().logIn(User.STANDART);
+        DrawingPageBase drawingPageBase = (DrawingPageBase) getNavUtil().clickNavMenuLink(NavMenu.DRAWING);
+        drawingPageBase.drawLine();
+        Assert.assertTrue(drawingPageBase.isDrawnLinePresent(), "Image is not present");
     }
 
     @Test()
