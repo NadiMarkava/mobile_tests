@@ -7,6 +7,8 @@ public enum NavMenu {
 
     LOG_OUT("test-LOGOUT", LoginPageBase.class),
 
+    DRAWING("test-DRAWING", DrawingPageBase.class),
+
     WEB_VIEW("test-WEBVIEW", WebViewSelectionPageBase.class);
 
     private final String label;
