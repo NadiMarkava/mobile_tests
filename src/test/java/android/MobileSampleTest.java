@@ -3,8 +3,6 @@ package android;
 import com.zebrunner.carina.core.registrar.ownership.MethodOwner;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import common.components.CartProductItemBase;
-import common.components.FilterBase;
-import common.components.ModalDialogViewBase;
 import common.components.TopBarMenuBase;
 import common.pages.*;
 import enums.NavMenu;
