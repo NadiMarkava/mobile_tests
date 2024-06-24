@@ -59,7 +59,7 @@ public class MobileContextUtils implements IDriverPool {
         NATIVE("NATIVE_APP"),
         WEB_SWAGLABS("WEBVIEW_com.swaglabsmobileapp"),
 
-        WEB_CHROME("WEBVIEW_chrome");
+        WEB_CHROME("CHROMIUM");
 
         String viewName;
 
