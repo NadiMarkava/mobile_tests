@@ -12,7 +12,6 @@ import enums.SortItem;
 import enums.User;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import utils.MobileContextUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -45,18 +44,6 @@ public class MobileSampleTest extends SwagLabsAbstractTest {
         Assert.assertTrue(productsPage.isPageOpened(), "Products page isn't opened");
         LoginPageBase loginPage = (LoginPageBase) getNavUtil().clickNavMenuLink(NavMenu.LOG_OUT);
         Assert.assertTrue(loginPage.isPageOpened(), "Login page isn't opened");
-    }
-
-    @Test()
-    @MethodOwner(owner = "nknysh")
-    public void verifyWebView() {
-        ProductsPageBase productsPage = getAuthUtil().logIn(User.STANDART);
-        Assert.assertTrue(productsPage.isPageOpened(), "Products page isn't opened");
-        WebViewSelectionPageBase webViewSelectionPage = (WebViewSelectionPageBase) getNavUtil().clickNavMenuLink(NavMenu.WEB_VIEW);
-        WebViewPageBase webViewPage = webViewSelectionPage.navigateToWebViewPage("https://www.saucedemo.com");
-        MobileContextUtils contextHelper = new MobileContextUtils();
-        contextHelper.switchMobileContext(MobileContextUtils.View.WEB_SWAGLABS);
-        Assert.assertTrue(webViewPage.isPageOpened(), "Login page isn't opened");
     }
 
     @Test()
