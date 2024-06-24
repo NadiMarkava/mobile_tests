@@ -1,9 +1,5 @@
 package enums;
-
-import common.pages.DrawingPageBase;
-import common.pages.LoginPageBase;
-import common.pages.ProductsPageBase;
-import common.pages.SwagLabsAbstractPageBase;
+import common.pages.*;
 
 public enum NavMenu {
 
@@ -11,8 +7,9 @@ public enum NavMenu {
 
     LOG_OUT("test-LOGOUT", LoginPageBase.class),
 
-    DRAWING("test-DRAWING", DrawingPageBase.class);
+    DRAWING("test-DRAWING", DrawingPageBase.class),
 
+    WEB_VIEW("test-WEBVIEW", WebViewSelectionPageBase.class);
 
     private final String label;
     private final Class<? extends SwagLabsAbstractPageBase> basePage;
